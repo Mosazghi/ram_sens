@@ -1,0 +1,6 @@
+{
+  "name": "ram_sens",
+  "description": "Monitors ram usage.",
+  "uuid": "ram_sens@mosazghi",
+  "shell-version": ["45, 46"]
+}
