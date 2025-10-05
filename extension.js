@@ -14,16 +14,20 @@ export default class RamSensor extends Extension {
 
     this.panelButton.set_child(this.panelButtonText);
     Main.panel._rightBox.insert_child_at_index(this.panelButton, 1);
+
     if (this.updateTimeout) {
       GLib.Source.remove(this.updateTimeout);
     }
+
+    this.mem = new GTop.glibtop_mem();
+
+    this.updateText();
+
     this.updateTimeout = GLib.timeout_add_seconds(
       GLib.PRIORITY_DEFAULT,
       5,
       this.updateText.bind(this),
     );
-
-    this.mem = new GTop.glibtop_mem();
   }
 
   disable() {
@@ -56,7 +60,7 @@ export default class RamSensor extends Extension {
       this.styleColors(usedMemPercentage);
       this.panelButtonText.set_text(`${usedMemPercentage}%`);
     } catch (e) {
-      console.errro(`Error updating RAM usage text: ${e.message}`);
+      console.error(`Error updating RAM usage text: ${e.message}`);
       this.panelButtonText.set_text("Error");
     }
     return true;
